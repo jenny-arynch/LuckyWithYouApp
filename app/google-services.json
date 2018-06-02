@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "856488691290",
+    "firebase_url": "https://luckywithyou-abd13.firebaseio.com",
+    "project_id": "luckywithyou-abd13",
+    "storage_bucket": "luckywithyou-abd13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856488691290:android:778054ce7c74da26",
+        "android_client_info": {
+          "package_name": "com.androidtutorialshub.LuckyWithYou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856488691290-ubo9p11msjldqfe3r509sv7mdd7v0p0h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.androidtutorialshub.LuckyWithYou",
+            "certificate_hash": "38e89d3f7d21851b2751f8df38f1f7c7f90aaed8"
+          }
+        },
+        {
+          "client_id": "856488691290-8t54dkggkltsb0j7ubfe290916b87cd9.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "856488691290-8t54dkggkltsb0j7ubfe290916b87cd9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9rTCVpQ9x_8gLPxhOkfZu2jIUNoPSoFI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856488691290-8t54dkggkltsb0j7ubfe290916b87cd9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

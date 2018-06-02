@@ -1,0 +1,43 @@
+<resources>
+    <string-array name="main_cancer">
+        <item>about1 MAIN</item>
+        <item>about2 MAIN</item>
+        <item>about3 MAIN</item>
+        <item>about4 MAIN</item>
+        <item>about5 MAIN</item>
+    </string-array>
+
+    <string-array name="Skin">
+        <item>about1 Skin</item>
+        <item>about2 Skin</item>
+        <item>about3 Skin</item>
+        <item>about4 Skin</item>
+        <item>about5 Skin</item>
+    </string-array>
+
+    <string-array name="Breast">
+        <item>about1 Breast</item>
+        <item>about2 Breast</item>
+        <item>about3 Breast</item>
+        <item>about4 Breast</item>
+        <item>about5 Breast</item>
+    </string-array>
+
+    <string-array name="Melanoma">
+        <item>about1 Melanoma</item>
+        <item>about2 Melanoma</item>
+        <item>about3 Melanoma</item>
+        <item>about4 Melanoma</item>
+        <item>about5 Melanoma</item>
+    </string-array>
+
+    <string-array name="Brain">
+        <item>about1 Brain</item>
+        <item>about2 Brain</item>
+        <item>about3 Brain</item>
+        <item>about4 Brain</item>
+        <item>about5 Brain</item>
+    </string-array>
+
+
+</resources>

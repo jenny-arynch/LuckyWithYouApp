@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Lucky with you</string>
+    <string name="text_accounts">All Accounts</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="text_login">Login</string>
+    <string name="text_register">Register</string>
+    <string name="error_message_name">Enter Full Name</string>
+    <string name="error_message_email">Enter Valid Email</string>
+    <string name="error_message_age">Enter Age</string>
+    <string name="error_message_password">Enter Password</string>
+    <string name="success_message">Registration Successful</string>
+    <string name="text_not_member">No account yet? Create one</string>
+    <string name="text_already_member">Already a member? Login</string>
+    <string name="error_email_exists">Email Already Exists</string>
+    <string name="error_password_match">Password Does Not Matches</string>
+    <string name="error_valid_email_password">Wrong Email or Password</string>
+    <string name="action_settings">Settings</string>
+    <string name="text_hello">Hello</string>
+    <string name="text_title">Lucky with you</string>
+    <string name="what_is_cancer">About Cancer</string>
+    <string name="user_profile">My profile</string>
+    <string name="trivia_game">Trivia game</string>
+    <string name="snake_game">Snake</string>
+    <string name="forum">Forum</string>
+    <string name="pressButton">ans</string>
+    <string name="score">Snake score</string>
+    <string name="back">Back</string>
+    <string name="BrainCancer">Brain</string>
+    <string name="getHint">Hint</string>
+    <string name="MelanomaCancer">Melanoma</string>
+    <string name="BreastCancer">Breast</string>
+    <string name="SkinCancer">Skin</string>
+    <string-array name="main_cancer">
+        <item>about1 MAIN</item>
+        <item>about2 MAIN</item>
+        <item>about3 MAIN</item>
+        <item>about4 MAIN</item>
+        <item>about5 MAIN</item>
+    </string-array>
+
+
+    <string-array name="cancer_types_array">
+        <item>All types</item>
+        <item>Brain</item>
+        <item>Melanoma</item>
+        <item>Breast</item>
+        <item>Skin</item>
+    </string-array>
+
+
+
+
+    <string-array name="Skin">
+        <item>about1 Skin</item>
+        <item>about2 Skin</item>
+        <item>about3 Skin</item>
+        <item>about4 Skin</item>
+        <item>about5 Skin</item>
+    </string-array>
+
+    <string-array name="Breast">
+        <item>about1 Breast</item>
+        <item>about2 Breast</item>
+        <item>about3 Breast</item>
+        <item>about4 Breast</item>
+        <item>about5 Breast</item>
+    </string-array>
+
+    <string-array name="Melanoma">
+        <item>about1 Melanoma</item>
+        <item>about2 Melanoma</item>
+        <item>about3 Melanoma</item>
+        <item>about4 Melanoma</item>
+        <item>about5 Melanoma</item>
+    </string-array>
+
+    <string-array name="Brain">
+        <item>about1 Brain</item>
+        <item>about2 Brain</item>
+        <item>about3 Brain</item>
+        <item>about4 Brain</item>
+        <item>about5 Brain</item>
+    </string-array>
+</resources>
