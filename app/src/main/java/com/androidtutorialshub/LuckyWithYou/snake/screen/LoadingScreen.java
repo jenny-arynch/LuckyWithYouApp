@@ -16,7 +16,7 @@ public class LoadingScreen extends ScreenAdapter {
     private static final float PROGRESS_BAR_WIDTH = GameConfig.HUD_WIDTH / 2f;
     private static final float PROGRESS_BAR_HEIGHT = 60f;
 
-    // == attributes ==
+
     private final HealtySnakeGame game;
     private final AssetManager assetManager;
 
@@ -28,7 +28,7 @@ public class LoadingScreen extends ScreenAdapter {
     private float waitTime = 0.75f;
     private boolean changeScreen;
 
-    // == constructors ==
+    
     public LoadingScreen(HealtySnakeGame game) {
         this.game = game;
         assetManager = game.getAssetManager();

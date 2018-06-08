@@ -4,24 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.widget.Button;
-import android.app.Dialog;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Random;
 
 import com.androidtutorialshub.LuckyWithYou.R;
-import com.androidtutorialshub.LuckyWithYou.model.User;
-import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
 
 public class AboutCancerStart extends AppCompatActivity implements View.OnClickListener{
     private String userEmail;

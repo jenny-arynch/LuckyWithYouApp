@@ -31,8 +31,12 @@
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.UsersListActivity"
-            android:screenOrientation="portrait" />
+        android:name=".activities.UsersListActivity"
+        android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activities.SnakeGameActivity"
+            android:screenOrientation="landscape" />
 
         <activity
             android:name=".activities.MainActivity"

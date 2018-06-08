@@ -2,13 +2,10 @@ package com.androidtutorialshub.LuckyWithYou.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -17,7 +14,6 @@ import com.androidtutorialshub.LuckyWithYou.adapters.UsersRecyclerAdapter;
 import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -34,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton appCompatButtonProfile;
     private AppCompatButton appCompatButtonForum;
     private AppCompatButton appCompatButtonCancer;
+    private AppCompatButton appCompatButtonSnake;
     private String userEmail;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +66,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appCompatButtonProfile= (AppCompatButton) findViewById(R.id.appCompatButtonProfile);
         appCompatButtonForum= (AppCompatButton) findViewById(R.id.appCompatButtonForum);
         appCompatButtonCancer= (AppCompatButton) findViewById(R.id.appCompatButtonCancer);
-
+        appCompatButtonSnake = (AppCompatButton)findViewById(R.id.appCompatButtonSnake);
     }
     private void initListeners() {
         appCompatButtonTrivia.setOnClickListener(this);
         appCompatButtonProfile.setOnClickListener(this);
         appCompatButtonForum.setOnClickListener(this);
         appCompatButtonCancer.setOnClickListener(this);
+        appCompatButtonSnake.setOnClickListener(this);
     }
     private void initObjects() {
 
@@ -125,17 +123,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intentRegister = new Intent(getApplicationContext(), UsersListActivity.class);
                 break;
             case R.id.appCompatButtonForum:
-                // Navigate to Profile
+                // Navigate to Forum
                 intentRegister = new Intent(getApplicationContext(), WebForumActivity.class);
                 break;
 
             case R.id.appCompatButtonCancer:
-                // Navigate to Profile
+                // Navigate to About cancer
                 intentRegister = new Intent(getApplicationContext(), AboutCancerActivity.class);
+                break;
+
+            case R.id.appCompatButtonSnake:
+                // Navigate to Snake
+
+               //intentRegister = new Intent(getApplicationContext(), SnakeGameActivity.class);
+
+                SnakeGameActivity snake = new SnakeGameActivity();
+
+
                 break;
 
 
         }
+
+
 
         if (intentRegister != null) {
             intentRegister.putExtra("EMAIL", userEmail.toString());

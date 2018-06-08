@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Snake {
 
-    private final Array<BodyPart> bodyParts = new Array<BodyPart>();
+    private final Array<BodyPart> bodyParts = new Array<>();
 
     private Direction direction = Direction.RIGHT;
     private SnakeHead head;
