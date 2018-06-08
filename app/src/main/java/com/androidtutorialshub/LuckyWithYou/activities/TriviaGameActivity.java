@@ -48,7 +48,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
     private TextView hintText;
     private ImageView imageView;
     private AppCompatButton appCompatButtonBack;
-    private ArrayList<TriviaQues> trivQues=new ArrayList<TriviaQues>();
+    private ArrayList<TriviaQues> trivQues= new ArrayList<>();
     private int currentQues=-1;
     private int countOfHints=0;
     private String userPassword;
@@ -60,6 +60,9 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
     private List<String> data;
     private Dialog dialog;
     private AppCompatButton start;
+
+
+
     public void onCreate(Bundle savedInstanceState) {
 
 

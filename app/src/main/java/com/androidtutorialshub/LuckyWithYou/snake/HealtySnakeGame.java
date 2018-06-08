@@ -15,8 +15,6 @@ public class HealtySnakeGame extends Game {
     private SpriteBatch batch;
 
 
-
-
     @Override
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
