@@ -2,22 +2,19 @@ package com.androidtutorialshub.LuckyWithYou.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.adapters.UsersRecyclerAdapter;
-import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,6 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton appCompatButtonForum;
     private AppCompatButton appCompatButtonCancer;
     private String userEmail;
+    private String userPassword;
+    private User currentUser;
+   private FireBaseHelper firebaseData;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +47,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
+
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
+
         }
 
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        try {
+            //firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        }
+        catch (Exception e){
+
+
+        }
 
         initViews();
         initListeners();
@@ -139,6 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (intentRegister != null) {
             intentRegister.putExtra("EMAIL", userEmail.toString());
+            intentRegister.putExtra("PASSWORD", userPassword.toString());
+            currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+            intentRegister.putExtra("currentUser", currentUser);
             startActivity(intentRegister);
 
         }

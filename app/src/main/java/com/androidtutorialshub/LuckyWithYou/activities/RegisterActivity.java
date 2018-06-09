@@ -1,5 +1,6 @@
 package com.androidtutorialshub.LuckyWithYou.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,12 +15,10 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.helpers.InputValidation;
-import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
 
-/**
- * Created by lalit on 8/27/2016.
- */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
     private final AppCompatActivity activity = RegisterActivity.this;
@@ -43,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
     private User user;
+    private FireBaseHelper firebaseData;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         initListeners();
         initObjects();
 
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
 
 
         staticSpinner = (Spinner) findViewById(R.id.static_spinner);
@@ -107,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void initObjects() {
         inputValidation = new InputValidation(activity);
-        databaseHelper = new DatabaseHelper(activity);
+        //databaseHelper = new DatabaseHelper(activity);
         user = new User();
 
     }
@@ -123,7 +124,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
 
             case R.id.appCompatButtonRegister:
-                postDataToSQLite();
+                postDataToFirebase();
                 break;
 
             case R.id.appCompatTextViewLoginLink:
@@ -131,6 +132,60 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
+    private void postDataToFirebase() {
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextName, textInputLayoutName, getString(R.string.error_message_name))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_password))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextMatches(textInputEditTextPassword, textInputEditTextConfirmPassword,
+                textInputLayoutConfirmPassword, getString(R.string.error_password_match))) {
+            return;
+        }
+        if(firebaseData.checkForUser(textInputEditTextEmail.getText().toString().trim(), textInputEditTextPassword.getText().toString().trim())<0)
+        {
+
+            user.name=textInputEditTextName.getText().toString().trim();
+            user.usermail=textInputEditTextEmail.getText().toString().trim();
+            user.password=textInputEditTextPassword.getText().toString().trim();
+            user.score="0";
+            user.typeOfCancer=String.valueOf(staticSpinner.getSelectedItem());
+            if(user.typeOfCancer=="All types")
+                user.data_display="1";
+            else
+                user.data_display="0";
+
+            firebaseData.addUser(user);
+
+            // Snack Bar to show success message that record saved successfully
+            Snackbar.make(nestedScrollView, getString(R.string.success_message), Snackbar.LENGTH_LONG).show();
+            emptyInputEditText();
+
+            Intent accountsIntent = new Intent(activity, MainActivity.class);
+            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
+            accountsIntent.putExtra("PASSWORD", textInputEditTextPassword.getText().toString().trim());
+            startActivity(accountsIntent);
+
+            //finish();//new
+
+
+        } else {
+            // Snack Bar to show error message that record already exists
+            Snackbar.make(nestedScrollView, getString(R.string.error_email_exists), Snackbar.LENGTH_LONG).show();
+        }
+
+
+
+    }
+
 
     /**
      * This method is to validate the input text fields and post data to SQLite
@@ -155,15 +210,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
 
-            user.setName(textInputEditTextName.getText().toString().trim());
-            user.setEmail(textInputEditTextEmail.getText().toString().trim());
-            user.setPassword(textInputEditTextPassword.getText().toString().trim());
-            user.setScore("0");
-            user.setCancerType(String.valueOf(staticSpinner.getSelectedItem()));
-            if(user.getCancerType()=="All types")
-                user.setDataDisplay("1");
+            user.name=textInputEditTextName.getText().toString().trim();
+            user.usermail=textInputEditTextEmail.getText().toString().trim();
+            user.password=textInputEditTextPassword.getText().toString().trim();
+            user.score="0";
+            user.typeOfCancer=String.valueOf(staticSpinner.getSelectedItem());
+            if(user.typeOfCancer=="All types")
+                user.data_display="1";
             else
-                user.setDataDisplay("0");
+                user.data_display="0";
 
             databaseHelper.addUser(user);
 

@@ -3,35 +3,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.widget.Button;
-import android.app.Dialog;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Random;
 
 import com.androidtutorialshub.LuckyWithYou.R;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 import com.androidtutorialshub.LuckyWithYou.model.User;
-import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
 
 public class AboutCancerActivity extends AppCompatActivity implements View.OnClickListener {
+
     private AppCompatButton appCompatButtonBrain;
     private AppCompatButton appCompatBreast;
     private AppCompatButton appCompatMelanoma;
     private AppCompatButton appCompatSkin;
 
     private String userEmail;
+    private String userPassword;
     private User currentUser;
     private AppCompatActivity activity = AboutCancerActivity.this;
-    private DatabaseHelper databaseHelper;
+    //private DatabaseHelper databaseHelper;
+    private FireBaseHelper firebaseData;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -42,40 +32,48 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
         }
-        databaseHelper = new DatabaseHelper(activity);
-        currentUser=databaseHelper.getUser(userEmail);
 
+        //databaseHelper = new DatabaseHelper(activity);
+        //currentUser=databaseHelper.getUser(userEmail);
+
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
         initViews();
         initListeners();
         editVisibleButtons();
+
+
     }
 
     private void editVisibleButtons(){
-        if(currentUser.getDataDisplay().equals("0")){
-            if(currentUser.getCancerType().equals("Brain")){
+        if(currentUser.data_display.equals("0")){
+            if(currentUser.typeOfCancer.equals("Brain")){
                 appCompatBreast.setVisibility(View.INVISIBLE);
                 appCompatMelanoma.setVisibility(View.INVISIBLE);
                 appCompatSkin.setVisibility(View.INVISIBLE);
 
             }
-            else if(currentUser.getCancerType().equals("Melanoma")){
+            else if(currentUser.typeOfCancer.equals("Melanoma")){
                 appCompatBreast.setVisibility(View.INVISIBLE);
                 appCompatButtonBrain.setVisibility(View.INVISIBLE);
                 appCompatSkin.setVisibility(View.INVISIBLE);
             }
-            else if(currentUser.getCancerType().equals("Breast")){
+            else if(currentUser.typeOfCancer.equals("Breast")){
                 appCompatMelanoma.setVisibility(View.INVISIBLE);
                 appCompatButtonBrain.setVisibility(View.INVISIBLE);
                 appCompatSkin.setVisibility(View.INVISIBLE);
             }
-            else if(currentUser.getCancerType().equals("Skin")){
+            else if(currentUser.typeOfCancer.equals("Skin")){
                 appCompatMelanoma.setVisibility(View.INVISIBLE);
                 appCompatButtonBrain.setVisibility(View.INVISIBLE);
                 appCompatBreast.setVisibility(View.INVISIBLE);
@@ -110,19 +108,26 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
         Intent intentRegister;
         intentRegister = new Intent(getApplicationContext(), AboutCancerStart.class);
         intentRegister.putExtra("EMAIL", userEmail.toString());
+        intentRegister.putExtra("PASSWORD", userPassword.toString());
+        intentRegister.putExtra("currentuser", currentUser);
+
 
         switch (v.getId()) {
             case R.id.appCompatButtonBrain: {
                 intentRegister.putExtra("CANCER", "Brain");
+                break;
             }
             case R.id.appCompatBreast: {
                 intentRegister.putExtra("CANCER", "Breast");
+                break;
             }
             case R.id.appCompatMelanoma: {
                 intentRegister.putExtra("CANCER", "Melanoma");
+                break;
             }
             case R.id.appCompatSkin: {
                 intentRegister.putExtra("CANCER", "Skin");
+                break;
             }
         }
 

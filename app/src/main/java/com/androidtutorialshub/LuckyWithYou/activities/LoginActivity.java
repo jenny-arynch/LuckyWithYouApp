@@ -12,28 +12,47 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.View;
-
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.helpers.InputValidation;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
+import com.androidtutorialshub.LuckyWithYou.model.UserParcelable;
+
+import android.support.annotation.NonNull;
+import android.widget.Button;
+import android.widget.Toast;
+
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = LoginActivity.this;
 
     private NestedScrollView nestedScrollView;
-
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
-
     private TextInputEditText textInputEditTextEmail;
     private TextInputEditText textInputEditTextPassword;
-
     private AppCompatButton appCompatButtonLogin;
-
     private AppCompatTextView textViewLinkRegister;
-
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
+
+
+    private static final int ANON_MODE = 100;
+    private static final int CREATE_MODE = 101;
+    private int buttonMode = ANON_MODE;
+    private Button softButton;
+    private User currentUser;
+    private  FireBaseHelper firebaseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +63,22 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initViews();
         initListeners();
         initObjects();
+
+        try {
+            firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        }
+        catch (Exception e){
+
+            textInputEditTextEmail.setText("jen@gmail.com");
+            textInputEditTextPassword.setText("1234");
+
+        }
+
+
+
     }
+
 
     /**
      * This method is to initialize views
@@ -91,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
-                verifyFromSQLite();
+                verifyFromFirebse();
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity
@@ -101,9 +135,45 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    /**
-     * This method is to validate the input text fields and verify login credentials from SQLite
-     */
+    private void verifyFromFirebse(){
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
+            return;
+        }
+        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_email))) {
+            return;
+        }
+
+        if(firebaseData.checkForUser(textInputEditTextEmail.getText().toString().trim(), textInputEditTextPassword.getText().toString().trim())>=0)
+        {
+            Intent accountsIntent = new Intent(activity, MainActivity.class);//TODO
+            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
+            accountsIntent.putExtra("PASSWORD", textInputEditTextPassword.getText().toString().trim());
+            //emptyInputEditText();
+            currentUser=firebaseData.getUser(textInputEditTextEmail.getText().toString().trim(), textInputEditTextPassword.getText().toString().trim());
+
+
+
+            accountsIntent.putExtra("currentUser", currentUser);
+
+
+            SharedPreferences settings = getSharedPreferences(textInputEditTextEmail.getText().toString(), 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(textInputEditTextEmail.getText().toString(), textInputEditTextPassword.getText().toString());
+            editor.commit();
+
+            startActivity(accountsIntent);
+        }
+        else {
+            // Snack Bar to show success message that record is wrong
+            Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
+        }
+    }
+
+
+
     private void verifyFromSQLite() {
         if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
             return;

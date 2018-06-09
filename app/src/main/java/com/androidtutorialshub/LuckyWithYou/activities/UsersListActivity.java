@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,10 +15,9 @@ import android.widget.ImageView;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.adapters.UsersRecyclerAdapter;
-import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
-
-import java.util.ArrayList;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
 import java.util.List;
 import java.util.Random;
 
@@ -38,8 +36,10 @@ public class UsersListActivity extends AppCompatActivity implements View.OnClick
     //private AppCompatButton appCompatButtonBack;
     private String userEmail;
     private ImageView imageView;
-
+    private String userPassword;
     private User currentUser;
+    private FireBaseHelper firebaseData;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,12 +51,22 @@ public class UsersListActivity extends AppCompatActivity implements View.OnClick
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
+
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
+
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
+
         }
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+
 
 
         initViews();
@@ -67,11 +77,11 @@ public class UsersListActivity extends AppCompatActivity implements View.OnClick
 
     private void setUserData(){
 
-        currentUser=databaseHelper.getUser(userEmail);
-        //textViewName.setText("Hello, "+currentUser.getName().toString());
-
-
-
+        //firebaseData=new FireBaseHelper(this.getApplicationContext());
+        //currentUser=firebaseData.getUser(userEmail,userPassword);
+        currentUser=new User();
+        currentUser.usermail=userEmail;
+        currentUser.password=userPassword;
     }
 
     /**
@@ -93,8 +103,9 @@ public class UsersListActivity extends AppCompatActivity implements View.OnClick
      */
     private void initObjects() {
         //listUsers = new ArrayList<>();
-        databaseHelper = new DatabaseHelper(activity);
+        //databaseHelper = new DatabaseHelper(activity);
         setUserData();
+
         usersRecyclerAdapter = new UsersRecyclerAdapter(currentUser);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -177,6 +188,9 @@ public class UsersListActivity extends AppCompatActivity implements View.OnClick
         }*/
         if (intentRegister != null) {
             intentRegister.putExtra("EMAIL", userEmail.toString());
+            intentRegister.putExtra("PASSWORD", userPassword.toString());
+            intentRegister.putExtra("currentUser", currentUser);
+
             startActivity(intentRegister);
 
         }

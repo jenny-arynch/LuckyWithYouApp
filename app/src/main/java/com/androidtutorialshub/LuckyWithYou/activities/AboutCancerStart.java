@@ -4,54 +4,69 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.widget.Button;
-import android.app.Dialog;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Random;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.model.User;
-import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 
 public class AboutCancerStart extends AppCompatActivity implements View.OnClickListener{
     private String userEmail;
+    private String userPassword;
     private String cansertype;
-    private AppCompatButton appCompatback;
-    private AppCompatButton appCompatnext;
+    private AppCompatButton back;
+    private AppCompatButton next;
+    private AppCompatButton back2;
+    private AppCompatButton next2;
+    private TextView textviewabout;
     private int currentIndex=0;
-    private String[] main_string= {"about1 MAIN", "about2 MAIN","about3 MAIN", "about4 MAIN", "about4 MAIN"};
+
+    private String[] main_string= {"about1 MAIN", "about2 MAIN","about3 MAIN", "about4 MAIN", "about5 MAIN"};
+    private String[] brain_string= {"about1 BRAIN", "about2 BRAIN","about3 BRAIN", "about4 BRAIN", "about5 BRAIN"};
+    private String[] breast_string= {"about1 BREAST", "about2 BREAST","about3 BREAST", "about4 BREAST", "about5 BREAST"};
+    private String[] melanoma_string= {"about1 MELANOMA", "about2 MELANOMA","about3 MELANOMA", "about4 MELANOMA", "about5 MELANOMA"};
+    private String[] skin_string= {"about1 SKIN", "about2 SKIN","about3 SKIN", "about4 SKIN", "about5SKIN"};
+    private User currentUser;
+
+    private boolean flipButtons=true;
+    private String[] current_string;
+    private static int MAX_ABOUT=5;
+    private int MAX_NEXT_STRING; //main_string size + next_string size
+    private FireBaseHelper firebaseData;
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_cancer_start);
 
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+
         setEmail(savedInstanceState);
         setCancertype(savedInstanceState);
-
-        initListeners();
         initViews();
+        initListeners();
+        changeButton();
+        textviewabout.setText(main_string[currentIndex]);
 
-        setNextText();//start
+        //setNextText();//start
     }
     private void initListeners() {
-        appCompatback.setOnClickListener(this);
-        appCompatnext.setOnClickListener(this);
 
+        back.setOnClickListener(this);
+        next.setOnClickListener(this);
+        back2.setOnClickListener(this);
+        next2.setOnClickListener(this);
 
     }
     private void initViews() {
-        appCompatnext = (AppCompatButton) findViewById(R.id.appCompatnext);
-        appCompatback = (AppCompatButton) findViewById(R.id.appCompatback);
+        next = (AppCompatButton) findViewById(R.id.next);
+        back = (AppCompatButton) findViewById(R.id.back);
+        next2 = (AppCompatButton) findViewById(R.id.next2);
+        back2 = (AppCompatButton) findViewById(R.id.back2);
+        textviewabout =(TextView) findViewById(R.id.textviewabout);
+
     }
     private void setEmail(Bundle savedInstanceState){
         if (savedInstanceState == null) {
@@ -64,7 +79,10 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
         }
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+
     }
+
     private void setCancertype(Bundle savedInstanceState){
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -76,41 +94,145 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
         } else {
             cansertype= (String) savedInstanceState.getSerializable("CANCER");
         }
+
+        switch (cansertype){
+            case "Brain":
+                current_string=brain_string;
+                MAX_NEXT_STRING=MAX_ABOUT+brain_string.length;
+                break;
+            case "Breast":
+                current_string=breast_string;
+                MAX_NEXT_STRING=MAX_ABOUT+breast_string.length;
+                break;
+            case "Melanoma":
+                current_string=melanoma_string;
+                MAX_NEXT_STRING=MAX_ABOUT+melanoma_string.length;
+                break;
+            case "Skin":
+                current_string=skin_string;
+                MAX_NEXT_STRING=MAX_ABOUT+skin_string.length;
+                break;
+
+        }
+
     }
 
     public void onClick(View v) {
         Intent intentRegister=null;
 
-        switch (v.getId()) {
-            case R.id.appCompatback: {
-                if(currentIndex<5)
-                    getPrevText();
-                else
-                    intentRegister = new Intent(getApplicationContext(), AboutCancerBrain.class);
+        int id=v.getId();
+        int buttonCase=-1;
+        if(id==R.id.next||id==R.id.next2)
+            buttonCase=0;
+        else if(id==R.id.back ||id==R.id.back2)
+            buttonCase=1;
 
 
-            }
-            case R.id.appCompatnext: {
-                if(currentIndex>0)
+
+        switch (buttonCase) {
+            case 0:
+                if(currentIndex>=0 && currentIndex<MAX_ABOUT-1)
                     setNextText();
-            }
+
+                else if(currentIndex>=MAX_ABOUT-1 && currentIndex<MAX_NEXT_STRING-1){
+                    setNextTextType();
+                }
+                else if(currentIndex==MAX_NEXT_STRING-1){
+                    textviewabout.setText("Now you can go to PLAY TRIVIA GAME");
+                    currentIndex++;
+                    next.setText("PLAY");
+                }
+                else if (currentIndex>MAX_NEXT_STRING-1){
+                    intentRegister = new Intent(getApplicationContext(), TriviaGameActivity.class);
+                    intentRegister.putExtra("EMAIL", userEmail.toString());
+                    startActivity(intentRegister);
+                }
+                changeButton();
+                break;
+
+            case 1:
+                if(currentIndex>0 && currentIndex<=MAX_ABOUT) {
+                    getPrevText();
+                    changeButton();
+                    break;
+                }
+                else if(currentIndex>MAX_ABOUT && currentIndex<MAX_NEXT_STRING-1) {
+                    getPrevTextType();
+                    changeButton();
+                    break;
+
+                }
+                else{
+
+                    intentRegister = new Intent(getApplicationContext(), AboutCancerActivity.class);
+                    intentRegister.putExtra("EMAIL", userEmail.toString());
+                    intentRegister.putExtra("PASSWORD", userPassword.toString());
+                    intentRegister.putExtra("currentUser", currentUser);
+
+                    startActivity(intentRegister);
+                    break;
+
+                }
+
         }
 
-        intentRegister.putExtra("EMAIL", userEmail.toString());
-
-        startActivity(intentRegister);
 
     }
 
     private void setNextText(){
 
-        appCompatnext.setText(main_string[currentIndex]);
         currentIndex++;
+        textviewabout.setText(main_string[currentIndex]);
+
     }
 
     private void getPrevText(){
         currentIndex--;
-        appCompatnext.setText(main_string[currentIndex]);
+        textviewabout.setText(main_string[currentIndex]);
+
+    }
+    private void setNextTextType(){
+        currentIndex++;
+
+        textviewabout.setText(current_string[currentIndex-MAX_ABOUT]);
+    }
+
+    private void getPrevTextType(){
+        currentIndex--;
+        textviewabout.setText(current_string[currentIndex-MAX_ABOUT]);
+
+    }
+
+    //NEXT
+    //android:layout_marginLeft="450px"
+    //android:layout_marginRight="60px"
+   // android:layout_marginBottom="0px"
+   // android:layout_marginTop="0px"
+
+    //BACK
+    //android:layout_marginTop="150px"
+    //android:layout_marginLeft="65px"
+    //android:layout_marginRight="450px"
+    //android:layout_marginBottom="0dp"
+
+    private void changeButton(){
+        if(flipButtons){
+            back2.setVisibility(View.INVISIBLE);
+            next2.setVisibility(View.INVISIBLE);
+            back.setVisibility(View.VISIBLE);
+            next.setVisibility(View.VISIBLE);
+
+            flipButtons=false;
+            return;
+        }
+        else{
+            back2.setVisibility(View.VISIBLE);
+            next2.setVisibility(View.VISIBLE);
+            back.setVisibility(View.INVISIBLE);
+            next.setVisibility(View.INVISIBLE);
+            flipButtons=true;
+            return;
+        }
     }
 
 }
