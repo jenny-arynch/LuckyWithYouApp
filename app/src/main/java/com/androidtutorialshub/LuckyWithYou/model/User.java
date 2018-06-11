@@ -17,6 +17,7 @@ public class User implements Serializable {
     public String score;
     public String typeOfCancer;
     public String usermail;
+    public String key;
 
     public String toString() {
         return "User [countofposts=" + countofposts
@@ -39,7 +40,6 @@ public class User implements Serializable {
         typeOfCancer = user.typeOfCancer;
         usermail = user.usermail;
 
-
     }
 
 
@@ -53,7 +53,17 @@ public class User implements Serializable {
         typeOfCancer = "ALL";
         usermail = "DELETETHISUSER";
     }
-
+    public User defaulUser() {
+        countofposts = "0";
+        data_display = "0";
+        name = "jenia";
+        newmessages = "0";
+        password = "1234";
+        score = "0";
+        typeOfCancer = "ALL";
+        usermail = "jen@gmail.com";
+        return this;
+    }
     /*
     private User(Parcel in) {
         countofposts = in.readString();

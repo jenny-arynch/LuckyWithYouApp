@@ -66,8 +66,8 @@ public class FireBaseHelper{
                 users = new ArrayList<User>();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     User user = new User();
-
-
+                    String k =postSnapshot.getKey();
+                    user.key =k;
                     for (DataSnapshot obj : postSnapshot.getChildren()) {
 
                         String key = obj.getKey();
@@ -81,6 +81,11 @@ public class FireBaseHelper{
                 if (index >= 0) {
                     users.remove(index);
                     myRef.child("none").removeValue();
+                }
+                //case of empty database
+                if(users.size()==0){
+                    User def =new User();
+                    users.add(def.defaulUser());
                 }
             }
 
@@ -143,7 +148,7 @@ public class FireBaseHelper{
 
     public void addUser(User user){
 
-        myRef.child(String.valueOf(users.size()+1)).setValue(user);
+        myRef.child(String.valueOf(users.size()+1)).setValue(toMap(user));
 
     }
 
@@ -170,10 +175,10 @@ public class FireBaseHelper{
     public void writeToFirebase(){
 
         myRef.removeValue();
-        myRef = secondDatabase.getReference("c1");
+        myRef = secondDatabase.getReference("users");
 
         for(int i=0;i<users.size();i++){
-            myRef.child(String.valueOf(i)).setValue(users.get(i));
+            myRef.child(String.valueOf(i)).setValue(toMap(users.get(i)));
 
         }
 
@@ -185,46 +190,12 @@ public class FireBaseHelper{
         if(index>=0) {
             users.get(index).updateUser(user);
 
-            writeToFirebase();
+           writeToFirebase();
 
-          //  myRef.child(String.valueOf(index)).setValue(user);
+           // myRef.child(user.key).setValue(toMap(user));
 
         }
 
 
     }
-/*
-    ValueEventListener changeListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            //String keyi = dataSnapshot.getKey();
-            //long i = dataSnapshot.getChildrenCount();
-
-            users= new ArrayList<User>();
-            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                User user=new User();
-
-                for (DataSnapshot obj:postSnapshot.getChildren()) {
-
-                     String key = obj.getKey();
-                    String value = obj.getValue(String.class);
-                     user.addProp(key,value);
-                }
-                users.add(user);
-            }
-
-            int index=checkForUser("DELETETHISUSER","DELETETHISUSER");
-            if(index>=0) {
-                users.remove(index);
-                myRef.child("none").removeValue();
-            }
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-        }
-    };
-
-*/
 }
