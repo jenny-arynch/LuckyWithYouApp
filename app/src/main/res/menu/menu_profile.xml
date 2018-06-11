@@ -1,10 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.androidtutorialshub.loginregister.ProfileActivity">
+    tools:context="com.androidtutorialshub.LuckyWithYou.activities.MainActivity">
+    <item
+        android:id="@+id/action_back"
+        android:icon="@drawable/back"
+        android:orderInCategory="100"
+        android:title="Back"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_logout"
+        android:orderInCategory="100"
+        android:title="Logout"
+        android:icon="@drawable/exit"
+        app:showAsAction="always"/>
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         android:title="@string/action_settings"
+        android:visible="false"
         app:showAsAction="never" />
+
 </menu>

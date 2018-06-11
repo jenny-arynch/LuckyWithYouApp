@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lucky with you</string>
+    <string name="text_accounts">All Accounts</string>
+    <string name="hint_name">שם</string>
+    <string name="hint_email">כתובת מייל</string>
+    <string name="hint_password">סיסמא</string>
+    <string name="hint_confirm_password">אישור סיסמא</string>
+    <string name="text_login">כניסה למערכת</string>
+    <string name="text_register">רישום למערכת</string>
+    <string name="error_message_name">שם מלא באנגלית</string>
+    <string name="error_message_email">כתובת אימייל לא תקינה</string>
+    <string name="error_message_age">גיל</string>
+    <string name="error_message_password">הכנס סיסמא</string>
+    <string name="success_message">רישום עבר בהצלחה</string>
+    <string name="text_not_member">עדיין לא רשום? תירשם עכשיו</string>
+    <string name="text_already_member">משתמש קיים? תיכנס למערכת עכשיו</string>
+    <string name="error_email_exists">כתובת אימייל רשומה במערכת</string>
+    <string name="error_password_match">סיסמא לא נכונה</string>
+    <string name="error_valid_email_password">סיסמא או כתובת אימייל שגואים</string>
+    <string name="action_settings">הגדרות</string>
+    <string name="text_hello">שלום!!!</string>
+    <string name="text_title">Lucky with you</string>
+    <string name="what_is_cancer">קצת הסבר על המחלה</string>
+    <string name="user_profile">עמוד אישי</string>
+    <string name="trivia_game">משחק טריוויה</string>
+    <string name="snake_game">Snake</string>
+    <string name="forum">פורום</string>
+    <string name="pressButton">ans</string>
+    <string name="score">כמות נקודות שנצברו</string>
+    <string name="back">חזרה</string>
+    <string name="BrainCancer">סרטן המוח</string>
+    <string name="getHint">רמז</string>
+    <string name="MelanomaCancer">מלנומה</string>
+    <string name="BreastCancer">סרטן השד</string>
+    <string name="SkinCancer">סרטן העור</string>
+    <string-array name="main_cancer">
+        <item>הסבר כללי 1</item>
+        <item>הסבר כללי 2</item>
+        <item>הסבר כללי 3</item>
+        <item>הסבר כללי 4</item>
+        <item>הסבר כללי 5</item>
+    </string-array>
+
+
+    <string-array name="cancer_types_array">
+        <item>כל הסוגים</item>
+        <item>סרטן המוח</item>
+        <item>מלנומה</item>
+        <item>סרטן השד</item>
+        <item>סרטן העור</item>
+    </string-array>
+
+
+
+
+    <string-array name="Skin">
+        <item>הסבר על סרטן העור 1</item>
+        <item>הסבר על סרטן העור 2</item>
+        <item>הסבר על סרטן העור 3</item>
+        <item>הסבר על סרטן העור 4</item>
+        <item>הסבר על סרטן העור 5</item>
+    </string-array>
+
+    <string-array name="Breast">
+        <item>הסבר על סרטן השד 1</item>
+        <item>הסבר על סרטן השד 2</item>
+        <item>הסבר על סרטן השד 3</item>
+        <item>הסבר על סרטן השד 4</item>
+        <item>הסבר על סרטן השד 5</item>
+    </string-array>
+
+    <string-array name="Melanoma">
+        <item>הסבר על מלנומה 1</item>
+        <item>הסבר על מלנומה 2</item>
+        <item>הסבר על מלנומה 3</item>
+        <item>הסבר על מלנומה 4</item>
+        <item>הסבר על מלנומה 5</item>
+    </string-array>
+
+    <string-array name="Brain">
+        <item>הסבר על סרטן המוח 1</item>
+        <item>הסבר על סרטן המוח 2</item>
+        <item>הסבר על סרטן המוח 3</item>
+        <item>הסבר על סרטן המוח 4</item>
+        <item>הסבר על סרטן המוח 5</item>
+    </string-array>
+
+    <string name="Prev">קודם</string>
+    <string name="Next">הבא</string>
+    <string name="Backtoup">חזרה לתפריט הראשי</string>
+
+</resources>

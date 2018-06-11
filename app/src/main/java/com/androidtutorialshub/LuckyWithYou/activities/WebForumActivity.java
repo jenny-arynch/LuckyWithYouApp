@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,7 +20,7 @@ import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 public class WebForumActivity  extends AppCompatActivity implements View.OnClickListener{
 
     private WebView myWebView;
-    private AppCompatButton back;
+    //private AppCompatButton back;
     private String userEmail;
     private String userPassword;
     private FireBaseHelper firebaseData;
@@ -29,6 +31,9 @@ public class WebForumActivity  extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webforum);
         setEmail(savedInstanceState);
+
+        getSupportActionBar();
+
         firebaseData=new FireBaseHelper(this.getApplicationContext());
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
@@ -42,7 +47,7 @@ public class WebForumActivity  extends AppCompatActivity implements View.OnClick
         webSettings.setJavaScriptEnabled(true);
         myWebView.loadUrl("http://evgenar-001-site1.gtempurl.com/");
         myWebView.setWebViewClient(new WebViewClient());
-        getSupportActionBar().hide();//new
+
     }
 
     @Override
@@ -55,7 +60,7 @@ public class WebForumActivity  extends AppCompatActivity implements View.OnClick
     }
     private void initListeners() {
 
-        back.setOnClickListener(this);
+       // back.setOnClickListener(this);
     }
     private void setEmail(Bundle savedInstanceState){
         if (savedInstanceState == null) {
@@ -82,7 +87,6 @@ public class WebForumActivity  extends AppCompatActivity implements View.OnClick
                 intentRegister.putExtra("EMAIL", userEmail.toString());
                 intentRegister.putExtra("PASSWORD", userPassword.toString());
                 intentRegister.putExtra("currentUser", currentUser);
-
                 startActivity(intentRegister);
                 break;
             }
@@ -90,29 +94,42 @@ public class WebForumActivity  extends AppCompatActivity implements View.OnClick
 
     }
     private void initViews() {
-        back = (AppCompatButton) findViewById(R.id.back);
+        //back = (AppCompatButton) findViewById(R.id.back);
     }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-       if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+            case R.id.action_logout:
+                intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
         }
-
-        return super.onOptionsItemSelected(item);
+        return (super.onOptionsItemSelected(item));
     }
-
 
 }

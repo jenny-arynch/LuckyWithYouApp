@@ -1,19 +1,14 @@
 package com.androidtutorialshub.LuckyWithYou.adapters;
 
-import android.content.Intent;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidtutorialshub.LuckyWithYou.R;
-import com.androidtutorialshub.LuckyWithYou.activities.MainActivity;
 import com.androidtutorialshub.LuckyWithYou.model.User;
-
-import java.util.List;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 
 /**
  */
@@ -22,8 +17,10 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
 
     private User currentuser;
 
+
     public UsersRecyclerAdapter(User currentuser) {
         this.currentuser = currentuser;
+
     }
 
     @Override
@@ -37,11 +34,11 @@ public class UsersRecyclerAdapter extends RecyclerView.Adapter<UsersRecyclerAdap
 
     @Override
     public void onBindViewHolder(UserViewHolder holder, int position) {
-        holder.textViewName.setText(currentuser.getName());
-        holder.textViewEmail.setText(currentuser.getEmail());
-        holder.textViewPassword.setText(currentuser.getPassword());
-        holder.textViewScore.setText(currentuser.getScore());
-        holder.textViewCancerType.setText(currentuser.getCancerType());
+        holder.textViewName.setText(currentuser.name);
+        holder.textViewEmail.setText(currentuser.usermail);
+        holder.textViewPassword.setText(currentuser.password);
+        holder.textViewScore.setText(currentuser.score);
+        holder.textViewCancerType.setText(currentuser.typeOfCancer);
 
     }
 

@@ -84,4 +84,9 @@
         <item>about4 Brain</item>
         <item>about5 Brain</item>
     </string-array>
+
+    <string name="Prev">Prev</string>
+    <string name="Next">Next</string>
+    <string name="Backtoup">Back to up</string>
+
 </resources>

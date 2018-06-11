@@ -3,6 +3,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.androidtutorialshub.LuckyWithYou.R;
@@ -27,6 +29,8 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_cancer);
+        getSupportActionBar();
+
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -53,6 +57,40 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
         editVisibleButtons();
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+
+                Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+            case R.id.action_logout:
+                intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
     }
 
     private void editVisibleButtons(){
@@ -109,7 +147,7 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
         intentRegister = new Intent(getApplicationContext(), AboutCancerStart.class);
         intentRegister.putExtra("EMAIL", userEmail.toString());
         intentRegister.putExtra("PASSWORD", userPassword.toString());
-        intentRegister.putExtra("currentuser", currentUser);
+        intentRegister.putExtra("currentUser", currentUser);
 
 
         switch (v.getId()) {

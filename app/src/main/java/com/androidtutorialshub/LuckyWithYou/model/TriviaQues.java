@@ -29,6 +29,18 @@ public class TriviaQues {
         return answer;
     }
 
+    public String getCorrectAns(){
+
+        if(answer.equals(getAns1()))
+            return getAns1();
+        else if(answer.equals(getAns2()))
+            return getAns2();
+        else if(answer.equals(getAns3()))
+            return getAns3();
+
+        return getAns4();
+    }
+
     //TODO
     public TriviaQues(String text){
         setData(text);

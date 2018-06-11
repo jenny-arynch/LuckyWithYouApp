@@ -10,6 +10,8 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.ArrayAdapter;
@@ -48,7 +50,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        getSupportActionBar().hide();
+        getSupportActionBar();
+
+
 
         initViews();
         initListeners();
@@ -72,6 +76,31 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         staticSpinner.setAdapter(staticAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_back:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+                return (true);
+
+            case R.id.action_logout:
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
+    }
     /**
      * This method is to initialize views
      */
@@ -162,6 +191,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 user.data_display="1";
             else
                 user.data_display="0";
+            user.countofposts="0";
+            user.newmessages="0";
 
             firebaseData.addUser(user);
 
@@ -172,6 +203,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Intent accountsIntent = new Intent(activity, MainActivity.class);
             accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
             accountsIntent.putExtra("PASSWORD", textInputEditTextPassword.getText().toString().trim());
+            accountsIntent.putExtra("currentUser", user);
+
             startActivity(accountsIntent);
 
             //finish();//new

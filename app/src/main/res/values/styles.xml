@@ -7,9 +7,18 @@
         <item name="android:textColorHint">@color/colorText</item>
         <item name="colorControlNormal">@color/colorText</item>
         <item name="colorControlActivated">@color/colorText</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/rounded_shape</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="HeaderBar">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 </resources>

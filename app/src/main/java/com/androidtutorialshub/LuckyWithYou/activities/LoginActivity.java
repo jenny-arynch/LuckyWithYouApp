@@ -10,27 +10,16 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.helpers.InputValidation;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
 import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 import com.androidtutorialshub.LuckyWithYou.model.User;
-import com.androidtutorialshub.LuckyWithYou.model.UserParcelable;
 
-import android.support.annotation.NonNull;
 import android.widget.Button;
-import android.widget.Toast;
-
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -46,6 +35,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private InputValidation inputValidation;
     private DatabaseHelper databaseHelper;
 
+    private String userEmail;
+    private String userPassword;
+
 
     private static final int ANON_MODE = 100;
     private static final int CREATE_MODE = 101;
@@ -58,7 +50,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+        getSupportActionBar();
+
+
 
         initViews();
         initListeners();
@@ -75,8 +69,58 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
+        try {
+
+            if (savedInstanceState == null) {
+                Bundle extras = getIntent().getExtras();
+                if (extras == null) {
+                    userEmail = null;
+                    userPassword = null;
+                } else {
+                    userEmail = extras.getString("EMAIL");
+                    userPassword = extras.getString("PASSWORD");
+
+                }
+            } else {
+                userEmail = (String) savedInstanceState.getSerializable("EMAIL");
+                userPassword = (String) savedInstanceState.getSerializable("PASSWORD");
+
+            }
+
+            if (userEmail != null && userPassword != null) {
+                textInputEditTextEmail.setText(userEmail);
+                textInputEditTextPassword.setText(userPassword);
+
+            }
+        }
+        catch (Exception e){
+            textInputEditTextEmail.setText("jen@gmail.com");
+            textInputEditTextPassword.setText("1234");
+        }
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(false);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_logout:
+                //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finishAndRemoveTask();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
     }
 
 

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.androidtutorialshub.LuckyWithYou.R;
@@ -16,6 +18,8 @@ import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
 import com.androidtutorialshub.LuckyWithYou.model.User;
 
 import java.util.List;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -40,7 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
-        getSupportActionBar().hide();
+
+        getSupportActionBar();
+
 
 
         if (savedInstanceState == null) {
@@ -76,7 +82,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //initObjects();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
 
+       getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(false);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+                return (true);
+            case R.id.action_logout:
+                Intent intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
+    }
 
     private void initViews() {
        // textViewName = (AppCompatTextView) findViewById(R.id.textViewName);

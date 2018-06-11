@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import com.androidtutorialshub.LuckyWithYou.model.User;
 
 import java.util.ArrayList;
@@ -78,9 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+/*
         ContentValues values = new ContentValues();
-        values.put(COLUMN_USER_NAME, user.getName());
+        values.put(COLUMN_USER_NAME, user.name);
         values.put(COLUMN_USER_EMAIL, user.getEmail());
         values.put(COLUMN_USER_PASSWORD, user.getPassword());
         values.put(COLUMN_TYPE_OF_CANCER, user.getCancerType());
@@ -90,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_USER, null, values);
         db.close();
+        */
     }
 
     /**
@@ -139,15 +139,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //int cursorCount = cursor.getCount();
 
         if (cursor.moveToFirst()) {
-
-            user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
+/*
+            //user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
             user.setName(cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)));
             user.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_USER_EMAIL)));
             user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
             user.setCancerType(cursor.getString(cursor.getColumnIndex(COLUMN_TYPE_OF_CANCER)));
             user.setDataDisplay(cursor.getString(cursor.getColumnIndex(COLUMN_DATA_DISPLAY)));
             user.setDataDisplay(cursor.getString(cursor.getColumnIndex(COLUMN_SCORE)));
-
+*/
         }
 
         cursor.close();
@@ -191,18 +191,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Traversing through all rows and adding to list
         if (cursor.moveToFirst()) {
-            do {
+            do {/*
                 User user = new User();
-                user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
+               // user.setId(Integer.parseInt(cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID))));
                 user.setName(cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)));
                 user.setEmail(cursor.getString(cursor.getColumnIndex(COLUMN_USER_EMAIL)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(COLUMN_USER_PASSWORD)));
                 user.setCancerType(cursor.getString(cursor.getColumnIndex(COLUMN_TYPE_OF_CANCER)));
                 user.setDataDisplay(cursor.getString(cursor.getColumnIndex(COLUMN_DATA_DISPLAY)));
                 user.setDataDisplay(cursor.getString(cursor.getColumnIndex(COLUMN_SCORE)));
-
+*/
                 // Adding user record to list
-                userList.add(user);
+                /*userList.add(user);*/
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -219,7 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-
+/*
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_NAME, user.getName());
         //values.put(COLUMN_USER_EMAIL, user.getEmail());
@@ -231,7 +231,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating row
         db.update(TABLE_USER, values, COLUMN_USER_EMAIL + " = ?",
                 new String[]{String.valueOf(user.getEmail())});
-        db.close();
+        db.close();*/
     }
 
     /**
@@ -242,8 +242,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         // delete user record by id
-        db.delete(TABLE_USER, COLUMN_USER_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+       // db.delete(TABLE_USER, COLUMN_USER_ID + " = ?",
+               // new String[]{String.valueOf(user.getId())});
         db.close();
     }
 

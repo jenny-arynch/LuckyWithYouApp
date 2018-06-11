@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
     private AppCompatButton next2;
     private TextView textviewabout;
     private int currentIndex=0;
+    //private Toolbar toolbar;
 
     private String[] main_string= {"about1 MAIN", "about2 MAIN","about3 MAIN", "about4 MAIN", "about5 MAIN"};
     private String[] brain_string= {"about1 BRAIN", "about2 BRAIN","about3 BRAIN", "about4 BRAIN", "about5 BRAIN"};
@@ -39,19 +43,55 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_cancer_start);
+        getSupportActionBar();
+
 
         firebaseData=new FireBaseHelper(this.getApplicationContext());
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
-
         setEmail(savedInstanceState);
         setCancertype(savedInstanceState);
+
+
         initViews();
         initListeners();
         changeButton();
         textviewabout.setText(main_string[currentIndex]);
 
-        //setNextText();//start
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                Intent intentRegister = new Intent(getApplicationContext(), AboutCancerActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+            case R.id.action_logout:
+                intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
+    }
+
     private void initListeners() {
 
         back.setOnClickListener(this);
@@ -73,13 +113,19 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
+
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
+
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
+
         }
-        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+      //  currentUser = (User) getIntent().getSerializableExtra("currentUser");
 
     }
 
@@ -117,6 +163,7 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
 
     }
 
+
     public void onClick(View v) {
         Intent intentRegister=null;
 
@@ -126,7 +173,6 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
             buttonCase=0;
         else if(id==R.id.back ||id==R.id.back2)
             buttonCase=1;
-
 
 
         switch (buttonCase) {
@@ -145,7 +191,10 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
                 else if (currentIndex>MAX_NEXT_STRING-1){
                     intentRegister = new Intent(getApplicationContext(), TriviaGameActivity.class);
                     intentRegister.putExtra("EMAIL", userEmail.toString());
+                    intentRegister.putExtra("PASSWORD", userPassword.toString());
+                    intentRegister.putExtra("currentUser", currentUser);
                     startActivity(intentRegister);
+                    finish();
                 }
                 changeButton();
                 break;
@@ -203,17 +252,6 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
 
     }
 
-    //NEXT
-    //android:layout_marginLeft="450px"
-    //android:layout_marginRight="60px"
-   // android:layout_marginBottom="0px"
-   // android:layout_marginTop="0px"
-
-    //BACK
-    //android:layout_marginTop="150px"
-    //android:layout_marginLeft="65px"
-    //android:layout_marginRight="450px"
-    //android:layout_marginBottom="0dp"
 
     private void changeButton(){
         if(flipButtons){

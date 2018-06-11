@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -57,6 +59,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
+        getSupportActionBar();
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
@@ -95,6 +98,41 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                firebaseData.updateUser(currentUser);
+                Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+            case R.id.action_logout:
+                intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
     }
 
     protected void alterDialogStartGame(String title, String message){
