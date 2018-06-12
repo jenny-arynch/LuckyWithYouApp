@@ -45,7 +45,8 @@
 
         <activity
             android:name=".activities.WebForumActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Forum"/>
         <activity
             android:name=".activities.AboutCancerActivity"
             android:screenOrientation="portrait" />

@@ -14,6 +14,11 @@
         <item name="android:textColorSecondary">@color/colorPrimary</item>
 
     </style>
+    <style name="Forum" parent="AppTheme">
+        <item name="colorPrimary">@color/forumactionbar</item>
+        <item name="android:textColorSecondary">@color/forumactionbar</item>
+
+    </style>
 
     <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/rounded_shape</item>
