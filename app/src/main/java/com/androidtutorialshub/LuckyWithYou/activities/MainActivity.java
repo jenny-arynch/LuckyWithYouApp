@@ -1,5 +1,7 @@
 package com.androidtutorialshub.LuckyWithYou.activities;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton appCompatButtonProfile;
     private AppCompatButton appCompatButtonForum;
     private AppCompatButton appCompatButtonCancer;
+    private AppCompatButton appCompatButtonSnake;
     private String userEmail;
     private String userPassword;
     private User currentUser;
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appCompatButtonProfile= (AppCompatButton) findViewById(R.id.appCompatButtonProfile);
         appCompatButtonForum= (AppCompatButton) findViewById(R.id.appCompatButtonForum);
         appCompatButtonCancer= (AppCompatButton) findViewById(R.id.appCompatButtonCancer);
+        appCompatButtonSnake= (AppCompatButton) findViewById(R.id.appCompatButtonSnake);
 
     }
     private void initListeners() {
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appCompatButtonProfile.setOnClickListener(this);
         appCompatButtonForum.setOnClickListener(this);
         appCompatButtonCancer.setOnClickListener(this);
+        appCompatButtonSnake.setOnClickListener(this);
     }
     private void initObjects() {
 
@@ -184,6 +189,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Navigate to Profile
                 intentRegister = new Intent(getApplicationContext(), AboutCancerActivity.class);
                 break;
+
+            case R.id.appCompatButtonSnake:
+                intentRegister = new Intent(Intent.ACTION_VIEW);
+                intentRegister.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intentRegister.setData(Uri.parse("com.simple-snake.android"));
+                startActivity(intentRegister);
 
 
         }
