@@ -5,11 +5,9 @@
     android:orientation="vertical">
 
 
-
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -27,6 +25,7 @@
                 android:layout_marginRight="200dp"
                 android:text="@string/text_hello"
                 android:textSize="30dp"
+                android:visibility="invisible"
                 android:layout_weight="1" />
 
 
@@ -48,10 +47,9 @@
                 />
 
 
-
-
-
         </LinearLayout>
+
+
 
 
     </android.support.v7.widget.LinearLayoutCompat>

@@ -26,7 +26,7 @@
     <string name="trivia_game">משחק טריוויה</string>
     <string name="snake_game">Snake</string>
     <string name="forum">פורום</string>
-    <string name="pressButton">ans</string>
+    <string name="pressButton">לבדוק תשובה</string>
     <string name="score">כמות נקודות שנצברו</string>
     <string name="back">חזרה</string>
     <string name="BrainCancer">סרטן המוח</string>
@@ -34,6 +34,7 @@
     <string name="MelanomaCancer">מלנומה</string>
     <string name="BreastCancer">סרטן השד</string>
     <string name="SkinCancer">סרטן העור</string>
+    <string name="Cancertype">סוג הסרטן</string>
     <string-array name="main_cancer">
         <item>הסבר כללי 1</item>
         <item>הסבר כללי 2</item>

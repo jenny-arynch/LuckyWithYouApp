@@ -22,7 +22,6 @@ public class AboutCancerActivity extends AppCompatActivity implements View.OnCli
     private String userPassword;
     private User currentUser;
     private AppCompatActivity activity = AboutCancerActivity.this;
-    //private DatabaseHelper databaseHelper;
     private FireBaseHelper firebaseData;
 
     public void onCreate(Bundle savedInstanceState) {

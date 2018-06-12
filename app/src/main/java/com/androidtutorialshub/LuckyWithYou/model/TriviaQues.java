@@ -2,13 +2,16 @@ package com.androidtutorialshub.LuckyWithYou.model;
 
 public class TriviaQues {
 
-    private String Ques="";
-    private String Ans1="";
-    private String Ans2="";
-    private String Ans3="";
-    private String Ans4="";
-    private String answer="";
-    private boolean used=false;
+    public String Ques="";
+    public String Ans1="";
+    public String Ans2="";
+    public String Ans3="";
+    public String Ans4="";
+    public String answer="";
+    public boolean used=false;
+    public String hint1="";
+    public String hint2="";
+    public String hint3="";
 
     public String getQues() {
         return Ques;
@@ -41,6 +44,9 @@ public class TriviaQues {
         return getAns4();
     }
 
+    public TriviaQues(){
+
+    }
     //TODO
     public TriviaQues(String text){
         setData(text);

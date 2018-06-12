@@ -24,13 +24,12 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
     private AppCompatButton next2;
     private TextView textviewabout;
     private int currentIndex=0;
-    //private Toolbar toolbar;
 
-    private String[] main_string= {"about1 MAIN", "about2 MAIN","about3 MAIN", "about4 MAIN", "about5 MAIN"};
-    private String[] brain_string= {"about1 BRAIN", "about2 BRAIN","about3 BRAIN", "about4 BRAIN", "about5 BRAIN"};
-    private String[] breast_string= {"about1 BREAST", "about2 BREAST","about3 BREAST", "about4 BREAST", "about5 BREAST"};
-    private String[] melanoma_string= {"about1 MELANOMA", "about2 MELANOMA","about3 MELANOMA", "about4 MELANOMA", "about5 MELANOMA"};
-    private String[] skin_string= {"about1 SKIN", "about2 SKIN","about3 SKIN", "about4 SKIN", "about5SKIN"};
+    private String[] main_string= {"על המחלה 1", "על המחלה 2","על המחלה 3", "על המחלה 4", "על המחלה 5"};
+    private String[] brain_string= {"סרטן המוח 1", "סרטן המוח 2","סרטן המוח 3", "סרטן המוח 4", "סרטן המוח 5"};
+    private String[] breast_string= {"סרטן השד 1", "סרטן השד 2","סרטן השד 3", "סרטן השד 4", "סרטן השד 5"};
+    private String[] melanoma_string= {"מלנומה 1", "מלנומה 2","מלנומה 3", "מלנומה 4", "מלנומה 5"};
+    private String[] skin_string= {"סרטן העור 1", "סרטן העור 2","סרטן העור 3", "סרטן העור 4", "סרטן העור 5"};
     private User currentUser;
 
     private boolean flipButtons=true;
@@ -184,9 +183,9 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
                     setNextTextType();
                 }
                 else if(currentIndex==MAX_NEXT_STRING-1){
-                    textviewabout.setText("Now you can go to PLAY TRIVIA GAME");
+                    textviewabout.setText("עכשיו אפשר לעבור למשחק טריוויה");
                     currentIndex++;
-                    next.setText("PLAY");
+                    next.setText("לשחק!");
                 }
                 else if (currentIndex>MAX_NEXT_STRING-1){
                     intentRegister = new Intent(getApplicationContext(), TriviaGameActivity.class);
