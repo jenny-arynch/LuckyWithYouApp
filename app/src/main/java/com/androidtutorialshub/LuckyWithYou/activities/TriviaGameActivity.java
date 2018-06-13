@@ -100,7 +100,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
         //readTriviaQues();
 
-        alterDialogStartGame("התחל לשחק","לקבלת רמז תלחץ על המנורה בצד ימין של המסך");
+        alterDialogStartGame("התחל לשחק","לקבלת רמז תלחץ על המנורה בצד שמאל של המסך");
 
 
 

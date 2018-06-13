@@ -191,10 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.appCompatButtonSnake:
-                intentRegister = new Intent(Intent.ACTION_VIEW);
-                intentRegister.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intentRegister.setData(Uri.parse("com.simple-snake.android"));
-                startActivity(intentRegister);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
 
 
         }

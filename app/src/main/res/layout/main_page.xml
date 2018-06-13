@@ -77,7 +77,7 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:drawableLeft="@drawable/snake"
-            android:text="@string/snake_game" />
+            android:text="@string/snake_game"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>

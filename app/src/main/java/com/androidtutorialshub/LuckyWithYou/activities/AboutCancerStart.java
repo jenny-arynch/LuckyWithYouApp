@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.androidtutorialshub.LuckyWithYou.R;
@@ -24,17 +25,46 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
     private AppCompatButton next2;
     private TextView textviewabout;
     private int currentIndex=0;
+    private ImageView  imageicon;
 
-    private String[] main_string= {"על המחלה 1", "על המחלה 2","על המחלה 3", "על המחלה 4", "על המחלה 5"};
-    private String[] brain_string= {"סרטן המוח 1", "סרטן המוח 2","סרטן המוח 3", "סרטן המוח 4", "סרטן המוח 5"};
-    private String[] breast_string= {"סרטן השד 1", "סרטן השד 2","סרטן השד 3", "סרטן השד 4", "סרטן השד 5"};
-    private String[] melanoma_string= {"מלנומה 1", "מלנומה 2","מלנומה 3", "מלנומה 4", "מלנומה 5"};
-    private String[] skin_string= {"סרטן העור 1", "סרטן העור 2","סרטן העור 3", "סרטן העור 4", "סרטן העור 5"};
+    private String[] main_string= {
+            "הגוף שלנו מורכב ממילוני תאים קטנים.\n ולכל אחד מהם יש תפקיד אחר.",
+            "לפעמים הגוף שלנו מייצר תאים 'מוזרים',\n שדגלים ללא שליטה ואין לנו שום צורך בהם.",
+            "תאים אלה נקראים תאים סרטניים\n והם אלה שיכולים לגרום למישהו להיות חולה.",
+            "קיימות הרבה סיבות לגלידה של תאים אלה.",
+            "תאים קיימים בגוף שלנו כל הזמן מייצרים תאים חדשים,\n כך למשל אנחנו גדלים מהר"
+    };
+    private String[] brain_string= {
+            "תאים סרטניים נוצרים הרבה יותר מהר מהתאים הרגילים.\n הם עוצרים את הגדילה של התאים הרגילים\n וגורמים למחלה.",
+            "קיימים יותר מ100 סוגי סרטן שונים.\n בדרך כלל הם נקראים על שם המקום בגוף בו התאים התחילו לגדול לראשונה.",
+            "מוח הוא החלק המרכזי של הדוף שלנו\n, מוח גורם לנו להיות איך שאנחנו! להרגיש, להחליט ולחשוב.",
+            "סרטן זה מתגלה כאשר מתחילים לגדול תאים לא טובים בתוך המוח."
+
+    };
+    private String[] breast_string= {
+            "תאים סרטניים נוצרים הרבה יותר מהר מהתאים הרגילים.\n הם עוצרים את הגדילה של התאים הרגילים\n וגורמים למחלה.",
+            "קיימים יותר מ100 סוגי סרטן שונים.\n בדרך כלל הם נקראים על שם המקום בגוף בו התאים התחילו לגדול לראשונה.",
+            "חזה של בן אדם מורכב מעור, שרירים ושומן.",
+            "גדילה של תאים רעים באזור של החזה גורמת לסרטן השד."
+    };
+    private String[] melanoma_string= {
+            "תאים סרטניים נוצרים הרבה יותר מהר מהתאים הרגילים.\n הם עוצרים את הגדילה של התאים הרגילים\n וגורמים למחלה.",
+            "קיימים יותר מ100 סוגי סרטן שונים.\n בדרך כלל הם נקראים על שם המקום בגוף בו התאים התחילו לגדול לראשונה.",
+            "עור זה החלק האיבר ההכי גדול בגוף שלנו.\n הוא נותן לנו הגנה בפני השמש, זיהומים, חום ומים.",
+            "מלנומה נוצרת כאשר תאים רעים מתחילים לגדול מעל העור או בטוח שכבות פנימיות."
+    };
+    private String[] skin_string= {
+            "תאים סרטניים נוצרים הרבה יותר מהר מהתאים הרגילים.\n הם עוצרים את הגדילה של התאים הרגילים\n וגורמים למחלה.",
+            "קיימים יותר מ100 סוגי סרטן שונים.\n בדרך כלל הם נקראים על שם המקום בגוף בו התאים התחילו לגדול לראשונה.",
+            "ריאות שלנו מקבלות חמצן מהאוויר שאנחנו נושמים.",
+            "סרטן הריאות נוצר כאשר כמות גדולה של תאים ראים נוצרת בתוך הריאות.",
+            "סיבה עיקרית לסרטן זה הוא עישון."
+    };
     private User currentUser;
 
     private boolean flipButtons=true;
     private String[] current_string;
-    private static int MAX_ABOUT=5;
+    private int MAX_ABOUT=main_string.length;
     private int MAX_NEXT_STRING; //main_string size + next_string size
     private FireBaseHelper firebaseData;
 
@@ -48,12 +78,13 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
         firebaseData=new FireBaseHelper(this.getApplicationContext());
         currentUser = (User) getIntent().getSerializableExtra("currentUser");
         setEmail(savedInstanceState);
-        setCancertype(savedInstanceState);
 
 
         initViews();
         initListeners();
         changeButton();
+        setCancertype(savedInstanceState);
+
         textviewabout.setText(main_string[currentIndex]);
 
     }
@@ -105,6 +136,7 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
         next2 = (AppCompatButton) findViewById(R.id.next2);
         back2 = (AppCompatButton) findViewById(R.id.back2);
         textviewabout =(TextView) findViewById(R.id.textviewabout);
+        imageicon= (ImageView) findViewById(R.id.imageicon);
 
     }
     private void setEmail(Bundle savedInstanceState){
@@ -144,18 +176,22 @@ public class AboutCancerStart extends AppCompatActivity implements View.OnClickL
             case "Brain":
                 current_string=brain_string;
                 MAX_NEXT_STRING=MAX_ABOUT+brain_string.length;
+                imageicon.setImageResource(R.drawable.aboutcancer5);
                 break;
             case "Breast":
                 current_string=breast_string;
                 MAX_NEXT_STRING=MAX_ABOUT+breast_string.length;
+                imageicon.setImageResource(R.drawable.aboutcancer6);
                 break;
             case "Melanoma":
                 current_string=melanoma_string;
                 MAX_NEXT_STRING=MAX_ABOUT+melanoma_string.length;
+                imageicon.setImageResource(R.drawable.aboutcancer4);
                 break;
             case "Skin":
                 current_string=skin_string;
                 MAX_NEXT_STRING=MAX_ABOUT+skin_string.length;
+                imageicon.setImageResource(R.drawable.aboutcancer2);
                 break;
 
         }

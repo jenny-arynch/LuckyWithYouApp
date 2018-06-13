@@ -33,7 +33,7 @@
     <string name="getHint">רמז</string>
     <string name="MelanomaCancer">מלנומה</string>
     <string name="BreastCancer">סרטן השד</string>
-    <string name="SkinCancer">סרטן העור</string>
+    <string name="SkinCancer">סרטן ריאות</string>
     <string name="Cancertype">סוג הסרטן</string>
     <string-array name="main_cancer">
         <item>הסבר כללי 1</item>
@@ -49,7 +49,7 @@
         <item>סרטן המוח</item>
         <item>מלנומה</item>
         <item>סרטן השד</item>
-        <item>סרטן העור</item>
+        <item>סרטן ריאות</item>
     </string-array>
 
 

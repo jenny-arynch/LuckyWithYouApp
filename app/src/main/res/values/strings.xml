@@ -32,7 +32,7 @@
     <string name="getHint">Hint</string>
     <string name="MelanomaCancer">Melanoma</string>
     <string name="BreastCancer">Breast</string>
-    <string name="SkinCancer">Skin</string>
+    <string name="SkinCancer">Lung</string>
     <string name="Cancertype">Cancer type</string>
     <string-array name="main_cancer">
         <item>about1 MAIN</item>
@@ -48,7 +48,7 @@
         <item>Brain</item>
         <item>Melanoma</item>
         <item>Breast</item>
-        <item>Skin</item>
+        <item>Lung</item>
     </string-array>
 
 
