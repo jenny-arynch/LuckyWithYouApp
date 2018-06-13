@@ -7,9 +7,28 @@
         <item name="android:textColorHint">@color/colorText</item>
         <item name="colorControlNormal">@color/colorText</item>
         <item name="colorControlActivated">@color/colorText</item>
+        <item name="android:windowBackground">@drawable/backgroundgreen</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+
+    </style>
+    <style name="Forum" parent="AppTheme">
+        <item name="colorPrimary">@color/forumactionbar</item>
+        <item name="android:textColorSecondary">@color/forumactionbar</item>
+
     </style>
 
     <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
         <item name="android:background">@drawable/rounded_shape</item>
+    </style>
+
+    <style name="FullScreen" parent="AppTheme">
+        <item name="android:windowFullscreen">false</item>
+    </style>
+
+    <style name="HeaderBar">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 </resources>

@@ -1,24 +1,27 @@
 package com.androidtutorialshub.LuckyWithYou.activities;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.adapters.UsersRecyclerAdapter;
-import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,32 +37,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton appCompatButtonProfile;
     private AppCompatButton appCompatButtonForum;
     private AppCompatButton appCompatButtonCancer;
+    private AppCompatButton appCompatButtonSnake;
     private String userEmail;
+    private String userPassword;
+    private User currentUser;
+   private FireBaseHelper firebaseData;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_page);
-        getSupportActionBar().hide();
+
+        getSupportActionBar();
+
 
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
+
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
+
         }
 
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+        firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        try {
+            //firebaseData=new FireBaseHelper(this.getApplicationContext());
+
+        }
+        catch (Exception e){
+
+
+        }
 
         initViews();
         initListeners();
         //initObjects();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
 
+       getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(false);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+                return (true);
+            case R.id.action_logout:
+                Intent intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
+    }
 
     private void initViews() {
        // textViewName = (AppCompatTextView) findViewById(R.id.textViewName);
@@ -69,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appCompatButtonProfile= (AppCompatButton) findViewById(R.id.appCompatButtonProfile);
         appCompatButtonForum= (AppCompatButton) findViewById(R.id.appCompatButtonForum);
         appCompatButtonCancer= (AppCompatButton) findViewById(R.id.appCompatButtonCancer);
+        appCompatButtonSnake= (AppCompatButton) findViewById(R.id.appCompatButtonSnake);
 
     }
     private void initListeners() {
@@ -76,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         appCompatButtonProfile.setOnClickListener(this);
         appCompatButtonForum.setOnClickListener(this);
         appCompatButtonCancer.setOnClickListener(this);
+        appCompatButtonSnake.setOnClickListener(this);
     }
     private void initObjects() {
 
@@ -134,11 +190,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intentRegister = new Intent(getApplicationContext(), AboutCancerActivity.class);
                 break;
 
+            case R.id.appCompatButtonSnake:
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+
 
         }
 
         if (intentRegister != null) {
             intentRegister.putExtra("EMAIL", userEmail.toString());
+            intentRegister.putExtra("PASSWORD", userPassword.toString());
+            currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+            intentRegister.putExtra("currentUser", currentUser);
             startActivity(intentRegister);
 
         }

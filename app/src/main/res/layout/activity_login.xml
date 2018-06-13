@@ -4,7 +4,6 @@
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -36,6 +35,7 @@
                 android:hint="@string/hint_email"
                 android:inputType="text"
                 android:maxLines="1"
+                android:text="jen@gmail.com"
                 android:textColor="@color/colorText" />
         </android.support.design.widget.TextInputLayout>
 
@@ -51,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
+                android:text="1234"
                 android:maxLines="1"
                 android:textColor="@color/colorText" />
         </android.support.design.widget.TextInputLayout>
@@ -60,7 +61,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:background="@color/colorTextHint"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/buttonshape"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
             android:text="@string/text_login" />
 
         <android.support.v7.widget.AppCompatTextView

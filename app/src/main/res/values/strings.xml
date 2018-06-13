@@ -26,13 +26,14 @@
     <string name="snake_game">Snake</string>
     <string name="forum">Forum</string>
     <string name="pressButton">ans</string>
-    <string name="score">Snake score</string>
+    <string name="score">Games score</string>
     <string name="back">Back</string>
     <string name="BrainCancer">Brain</string>
     <string name="getHint">Hint</string>
     <string name="MelanomaCancer">Melanoma</string>
     <string name="BreastCancer">Breast</string>
-    <string name="SkinCancer">Skin</string>
+    <string name="SkinCancer">Lung</string>
+    <string name="Cancertype">Cancer type</string>
     <string-array name="main_cancer">
         <item>about1 MAIN</item>
         <item>about2 MAIN</item>
@@ -47,7 +48,7 @@
         <item>Brain</item>
         <item>Melanoma</item>
         <item>Breast</item>
-        <item>Skin</item>
+        <item>Lung</item>
     </string-array>
 
 
@@ -84,4 +85,9 @@
         <item>about4 Brain</item>
         <item>about5 Brain</item>
     </string-array>
+
+    <string name="Prev">Prev</string>
+    <string name="Next">Next</string>
+    <string name="Backtoup">Back to up</string>
+
 </resources>

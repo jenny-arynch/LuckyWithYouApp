@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     android:id="@+id/nestedScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:paddingBottom="20dp"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    tools:context=".activities.LoginActivity">
+    tools:context=".activities.MainActivity"
+
+    >
+
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -21,7 +25,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonProfile"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="70dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
@@ -35,7 +39,7 @@
             android:id="@+id/appCompatButtonTrivia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/buttonshape"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -46,7 +50,7 @@
             android:id="@+id/appCompatButtonCancer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/buttonshape"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -57,7 +61,7 @@
             android:id="@+id/appCompatButtonForum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/buttonshape"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -68,12 +72,13 @@
             android:id="@+id/appCompatButtonSnake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="70dp"
             android:background="@drawable/buttonshape"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:drawableLeft="@drawable/snake"
-            android:text="@string/snake_game" />
+            android:text="@string/snake_game"/>
 
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>
+

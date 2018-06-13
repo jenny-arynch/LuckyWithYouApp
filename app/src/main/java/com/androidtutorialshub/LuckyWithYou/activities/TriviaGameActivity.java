@@ -2,32 +2,41 @@ package com.androidtutorialshub.LuckyWithYou.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.Button;
 import android.app.Dialog;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.model.TriviaQues;
-import com.androidtutorialshub.LuckyWithYou.model.User;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
+import com.androidtutorialshub.LuckyWithYou.sql.FireBaseHelper;
+import com.androidtutorialshub.LuckyWithYou.model.User;
 
 public class TriviaGameActivity extends AppCompatActivity implements View.OnClickListener {
     private AppCompatActivity activity = TriviaGameActivity.this;
 
+    private RadioGroup myRadioGroup;
     private AppCompatButton appCompatButtonTriviaAns;
     private AppCompatRadioButton radioButton1;
     private AppCompatRadioButton radioButton2;
@@ -37,18 +46,18 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
     private TextView hellotxt;
     private TextView score;
     private TextView hintText;
-    //private TextView correctAnswer;
     private ImageView imageView;
     private AppCompatButton appCompatButtonBack;
     private ArrayList<TriviaQues> trivQues=new ArrayList<TriviaQues>();
     private int currentQues=-1;
     private int countOfHints=0;
-    private DatabaseHelper databaseHelper;
-
+    private String userPassword;
+    private FireBaseHelper firebaseData;
     final Context context = this;
     private String userEmail;
     private User currentUser;
 
+    private List<String> data;
     private Dialog dialog;
     private AppCompatButton start;
     public void onCreate(Bundle savedInstanceState) {
@@ -56,39 +65,85 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia);
+        getSupportActionBar();
 
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 userEmail= null;
+                userPassword=null;
             } else {
                 userEmail= extras.getString("EMAIL");
+                userPassword= extras.getString("PASSWORD");
+
             }
         } else {
             userEmail= (String) savedInstanceState.getSerializable("EMAIL");
+            userPassword= (String) savedInstanceState.getSerializable("PASSWORD");
+
         }
-        databaseHelper = new DatabaseHelper(activity);
-        currentUser=databaseHelper.getUser(userEmail);
-        if(currentUser.getScore()==null)
-            currentUser.setScore("0");
+        //databaseHelper = new DatabaseHelper(activity);
+        //currentUser=databaseHelper.getUser(userEmail);
+
+       firebaseData=new FireBaseHelper(this.getApplicationContext());
+       // currentUser=firebaseData.getUser(userEmail,userPassword);
+
+        currentUser = (User) getIntent().getSerializableExtra("currentUser");
+        if(currentUser.score==null)
+            currentUser.score="0";
 
         initViews();
-
         initListeners();
-        readTriviaQues();
 
-        //createDialog();
+        fillData();
+        buildQuesArray();
 
+        //readTriviaQues();
 
-        alterDialogStartGame("Start To Play","PLAY");
+        alterDialogStartGame("התחל לשחק","לקבלת רמז תלחץ על המנורה בצד שמאל של המסך");
 
 
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        menu.findItem(R.id.action_logout).setVisible(true);
+        menu.findItem(R.id.action_back).setVisible(true);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.action_back:
+                firebaseData.updateUser(currentUser);
+                Intent intentRegister = new Intent(getApplicationContext(), MainActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+            case R.id.action_logout:
+                intentRegister = new Intent(getApplicationContext(), LoginActivity.class);
+                intentRegister.putExtra("EMAIL", userEmail.toString());
+                intentRegister.putExtra("PASSWORD", userPassword.toString());
+                //currentUser=firebaseData.getUser(currentUser.usermail,currentUser.password);
+                intentRegister.putExtra("currentUser", currentUser);
+                startActivity(intentRegister);
+                finish();
+                return (true);
+        }
+        return (super.onOptionsItemSelected(item));
+    }
+
     protected void alterDialogStartGame(String title, String message){
 
-        //correctAnswer.setText("");
+
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
@@ -101,27 +156,28 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
         alertDialogBuilder
                 .setMessage(message)
                 .setCancelable(false)
-                .setNegativeButton("No",
+                .setNegativeButton("לחזור",
 
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog,
                                                 int id) {
                                 //update user data
-                                databaseHelper.updateUser(currentUser);
+                                //databaseHelper.updateUser(currentUser);
+                                firebaseData.updateUser(currentUser);
                                 // if this button is clicked, close
                                 // current activity
                                 TriviaGameActivity.this.finish();
                             }
                         })
-                .setPositiveButton("Yes",
+                .setPositiveButton("PLAY",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
                                 // if this button is clicked, just close
                                 // the dialog box and do nothing
                                 dialog.cancel();
-                                score.setText("Score: ".concat(currentUser.getScore()));
+                                score.setText("Score: ".concat(currentUser.score));
                                 startGame();
                             }
                         });
@@ -142,14 +198,46 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
                 context);
 
         // set title
-        alertDialogBuilder.setTitle("Hint");
+        alertDialogBuilder.setTitle("רמז");
         alertDialogBuilder.setIcon(R.drawable.lightbulb);
 
         // set dialog message
         alertDialogBuilder
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton("OK",
+                .setPositiveButton("תודה",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+                                // if this button is clicked, just close
+                                // the dialog box and do nothing
+                                dialog.cancel();
+                            }
+                        });
+
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        // show it
+        alertDialog.show();
+    }
+
+    protected void alterDialogChooseAnswer(){
+
+        //correctAnswer.setText("");
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title
+        alertDialogBuilder.setTitle("תשובה");
+        alertDialogBuilder.setIcon(R.drawable.lightbulb);
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("נא לבחור תשובה")
+                .setCancelable(false)
+                .setPositiveButton("הבנתי",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int id) {
@@ -168,23 +256,12 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
     protected Dialog createDialog() {
         dialog = new Dialog(context);
-        dialog.setTitle("Start Trivia Game");
-
-       // Context context = TriviaGameActivity.this;
-        // dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        dialog.setTitle("התחל לשחק");
         dialog.setContentView(R.layout.activity_trivia);
-
-       // start = (AppCompatButton) dialog.findViewById(R.id.start);
-
-
         return dialog;
     }
 
     private void startGame(){
-
-        //score.setText("Score: ".concat(currentUser.getScore()));
-        //correctAnswer.setText("");
 
         if(radioButton1.isChecked())
             radioButton1.setChecked(false);
@@ -352,6 +429,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
         start = (AppCompatButton) findViewById(R.id.start);
         imageView= (ImageView) findViewById(R.id.imageicon);
 
+
         radioButton1=(AppCompatRadioButton) findViewById(R.id.radioButton1);
         radioButton2=(AppCompatRadioButton) findViewById(R.id.radioButton2);
         radioButton3=(AppCompatRadioButton) findViewById(R.id.radioButton3);
@@ -359,18 +437,21 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
         hellotxt =(TextView) findViewById(R.id.hellotxt);
         hintText =(TextView) findViewById(R.id.hintText);
         score =(TextView) findViewById(R.id.score);
-
-       // correctAnswer =(TextView) findViewById(R.id.correctAnswer);
-
+       // myRadioGroup= (RadioGroup) findViewById(R.id.myRadioGroup);
         imageHint=(ImageButton)findViewById(R.id.imageHint);
+
+        //myRadioGroup.addView(radioButton1);
+        //myRadioGroup.addView(radioButton2);
+
+        //myRadioGroup.addView(radioButton3);
+        //myRadioGroup.addView(radioButton4);
+
     }
 
     private void initListeners() {
         appCompatButtonTriviaAns.setOnClickListener(this);
         appCompatButtonBack.setOnClickListener(this);
         imageHint.setOnClickListener(this);
-        //start.setOnClickListener(this);
-
     }
 
     public void onClick(View v) {
@@ -379,41 +460,57 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
             switch (v.getId()) {
                 case R.id.appCompatButtonTriviaAns: {
                     // TODO
-                    if (checkAns() == true) {
+                    if(!radioButton1.isChecked()&&!radioButton2.isChecked()&&!radioButton3.isChecked()&&!radioButton4.isChecked()){
+                        alterDialogChooseAnswer();
+                        break;
+                    }
+                    else if (checkAns() == true) {
                         //mark Quest as used
                         trivQues.get(currentQues).markAsUsed();
                         //getNextQues
-
-
-                        int var = Integer.parseInt(currentUser.getScore())+10;
-                        currentUser.setScore(String.valueOf(var));
-                        score.setText("Score: ".concat(currentUser.getScore()));
-
-
-                        alterDialogStartGame("Game","Correct Answer!!! Continue to Play?");
-
+                        int var = Integer.parseInt(currentUser.score)+10;
+                        currentUser.score=String.valueOf(var);
+                        score.setText("Score: ".concat(currentUser.score));
+                        alterDialogStartGame("","תשובה נכונה!!! האם תרצה להמשיך לשחק?");
                         startGame();
-                    } else {
+
+                    }
+                    else {
                         //getHint
                         if (countOfHints < 3) {
-                            showHint(countOfHints);
+                            showHint(currentQues, countOfHints);
                             countOfHints++;
                             showQues(currentQues);
+                            break;
+
+                        }
+                        //no more hints - show current answer
+                        else{
+                            countOfHints=0;
+                            int var = Integer.parseInt(currentUser.score)+5;
+                            currentUser.score=String.valueOf(var);
+                            score.setText("Score: ".concat(currentUser.score));
+                            alterDialogStartGame("","אופסס... תשובה נכונה: ".concat(trivQues.get(currentQues).getCorrectAns()));
+                            startGame();
+
                         }
                     }
                     break;
-
                 }
                 case R.id.appCompatButtonBack: {
                     //update user score
-                    databaseHelper.updateUser(currentUser);
+                    //databaseHelper.updateUser(currentUser);
+                    firebaseData.updateUser(currentUser);
                     // Navigate to Profile
                     intentRegister = new Intent(getApplicationContext(), MainActivity.class);
                     //send user email
                     if (intentRegister != null) {
                         intentRegister.putExtra("EMAIL", userEmail.toString());
+                        intentRegister.putExtra("PASSWORD", userPassword.toString());
+                        intentRegister.putExtra("currentuser", currentUser);
 
                     }
+
                     startActivity(intentRegister);
                     break;
                 }
@@ -426,7 +523,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
                 case R.id.imageHint: {
                     //getHint
                     if (countOfHints < 3) {
-                        showHint(countOfHints);
+                        showHint(currentQues, countOfHints);
                         countOfHints++;
                         showQues(currentQues);
                     }
@@ -436,22 +533,26 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void showHint(int hintNumber){
+    private void showHint(int currentQues, int hintNumber){
 
         String hint="";
         switch (hintNumber){
             case 0:{
-                hint= "First Hint";
+                //hint= "First Hint";
+                hint=trivQues.get(currentQues).hint1;
                 break;
             }
             case 1:
             {
-                hint= "Second Hint";
+                //hint= "Second Hint";
+                hint=trivQues.get(currentQues).hint2;
+
                 break;
 
             }
             case 2:{
-                hint="Third Hint";
+                //hint="Third Hint";
+                hint=trivQues.get(currentQues).hint3;
                 break;
 
             }
@@ -485,5 +586,80 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
         return false;
     }
 
+    private void fillData(){
+
+        data=new ArrayList<String>();
+
+        data.add("\nשאלה 1");
+        data.add("תשובה 1");
+        data.add("תשובה 2");
+        data.add("תשובה 3");
+        data.add("תשובה 4");
+        data.add("1");
+        data.add("רמז 1");
+        data.add("רמז 2");
+        data.add("רמז 3");
+
+        data.add("\nשאלה 2");
+        data.add("תשובה 1");
+        data.add("תשובה 2");
+        data.add("תשובה 3");
+        data.add("תשובה 4");
+        data.add("2");
+        data.add("רמז 1");
+        data.add("רמז 2");
+        data.add("רמז 3");
+
+        data.add("\nשאלה 3");
+        data.add("תשובה 1");
+        data.add("תשובה 2");
+        data.add("תשובה 3");
+        data.add("תשובה 4");
+        data.add("3");
+        data.add("רמז 1");
+        data.add("רמז 2");
+        data.add("רמז 3");
+
+        data.add("\nשאלה 4");
+        data.add("תשובה 1");
+        data.add("תשובה 2");
+        data.add("תשובה 3");
+        data.add("תשובה 4");
+        data.add("4");
+        data.add("רמז 1");
+        data.add("רמז 2");
+        data.add("רמז 3");
+
+        data.add("\nשאלה 5");
+        data.add("תשובה 1");
+        data.add("תשובה 2");
+        data.add("תשובה 3");
+        data.add("תשובה 4");
+        data.add("1");
+        data.add("רמז 1");
+        data.add("רמז 2");
+        data.add("רמז 3");
+
+    }
+
+    private void buildQuesArray(){
+
+        int i=0;
+        for(int j=0;j<data.size()/9;j++){
+
+            TriviaQues q=new TriviaQues();
+            q.Ques=data.get(i++);
+            q.Ans1=data.get(i++);
+            q.Ans2=data.get(i++);
+            q.Ans3=data.get(i++);
+            q.Ans4=data.get(i++);
+            q.answer=data.get(i++);
+            q.hint1=data.get(i++);
+            q.hint2=data.get(i++);
+            q.hint3=data.get(i++);
+
+            trivQues.add(q);
+        }
+    }
 }
 
