@@ -4,11 +4,11 @@ public class GameConfig {
 
     private static final float Y_OFFSET = 2;
 
-    public static final float WIDTH = 800f; // pixels
-    public static final float HEIGHT = 480f; // pixels
+    public static final float WIDTH = 2960f; // pixels
+    public static final float HEIGHT = 1440f; // pixels
 
-    public static final float HUD_WIDTH = 800f; // world units
-    public static final float HUD_HEIGHT = 480f; // world units
+    public static final float HUD_WIDTH = 2960f; // world units
+    public static final float HUD_HEIGHT = 1440f; // world units
 
     public static final float WORLD_WIDTH = 25f; // world units
     public static final float WORLD_HEIGHT = 15f; // world units
