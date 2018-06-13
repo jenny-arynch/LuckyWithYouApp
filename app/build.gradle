@@ -43,6 +43,7 @@ dependencies {
     natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-arm64-v8a"
     natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-x86"
     natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-x86_64"
+    
     implementation fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:27.1.0'
