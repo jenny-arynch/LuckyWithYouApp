@@ -77,7 +77,7 @@ public class MenuScreen extends ScreenAdapter {
 
     private Actor createUi() {
         Table table = new Table(skin);
-        table.defaults().pad(10);
+        table.defaults().pad(20);
 
         TextureRegion backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
