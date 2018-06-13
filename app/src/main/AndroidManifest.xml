@@ -35,8 +35,7 @@
         android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activities.SnakeGameActivity"
-            android:screenOrientation="landscape" />
+            android:name=".activities.SnakeGameActivity" />
 
         <activity
             android:name=".activities.MainActivity"

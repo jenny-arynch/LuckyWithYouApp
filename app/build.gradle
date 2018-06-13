@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 27
     buildToolsVersion '27.0.3'
+
+
     defaultConfig {
         applicationId "com.androidtutorialshub.LuckyWithYou"
         minSdkVersion 23
@@ -11,7 +13,19 @@ android {
 
         versionCode 1
         versionName "1.0"
+
+        ndk {
+            abiFilters "armeabi-v7a", "x86", "armeabi"
+        }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['lib']
+        }
+        androidTest.setRoot('tests')
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -23,7 +37,13 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    configurations { natives }
+    natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-armeabi"
+    natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-armeabi-v7a"
+    natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-arm64-v8a"
+    natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-x86"
+    natives "com.badlogicgames.gdx:gdx-platform:'1.9.8':natives-x86_64"
+    implementation fileTree(include: ['*.jar'], dir: 'lib')
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:design:27.1.0'
@@ -36,7 +56,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.0.0'
     //compile 'com.google.firebase:firebase-core:16.0.0'//new
     implementation files('lib/gdx-backend-android.jar')
-    implementation files('lib/gdx.jar')
+    implementation files('lib/gdx-natives.jar')
+    implementation files('lib/gdx-backend-android-sources.jar')
 }
+
+
+
 
 apply plugin: 'com.google.gms.google-services'

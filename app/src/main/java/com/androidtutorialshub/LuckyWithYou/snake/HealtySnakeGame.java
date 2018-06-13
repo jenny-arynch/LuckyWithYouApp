@@ -1,7 +1,16 @@
 package com.androidtutorialshub.LuckyWithYou.snake;
 
 
+import android.content.Context;
+import android.graphics.Point;
+import android.graphics.SurfaceTexture;
+import android.view.Surface;
+import android.view.SurfaceView;
+
+import com.androidtutorialshub.LuckyWithYou.R;
+import com.androidtutorialshub.LuckyWithYou.activities.SnakeGameActivity;
 import com.androidtutorialshub.LuckyWithYou.snake.screen.LoadingScreen;
+import com.androidtutorialshub.LuckyWithYou.snake.screen.MenuScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -14,7 +23,6 @@ public class HealtySnakeGame extends Game {
     private AssetManager assetManager;
     private SpriteBatch batch;
 
-
     @Override
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
@@ -25,6 +33,7 @@ public class HealtySnakeGame extends Game {
         batch = new SpriteBatch();
 
         setScreen(new LoadingScreen(this));
+
     }
 
     public void dispose() {

@@ -34,8 +34,6 @@ public class MenuScreen extends ScreenAdapter {
     private Skin skin;
     private TextureAtlas gamePlayAtlas;
 
-
-
     public MenuScreen(HealtySnakeGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
