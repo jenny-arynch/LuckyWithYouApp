@@ -40,7 +40,7 @@ public class GameScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        foodSound = assetManager.get(AssetDescriptors.COIN_SOUND);
+        foodSound = assetManager.get(AssetDescriptors.FOOD_SOUND);
         loseSound = assetManager.get(AssetDescriptors.LOSE_SOUND);
 
         controller = new GameController(listener);

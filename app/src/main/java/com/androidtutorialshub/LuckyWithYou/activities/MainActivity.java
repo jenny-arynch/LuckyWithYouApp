@@ -1,5 +1,7 @@
 package com.androidtutorialshub.LuckyWithYou.activities;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -7,11 +9,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.View;
 
 import com.androidtutorialshub.LuckyWithYou.R;
 import com.androidtutorialshub.LuckyWithYou.adapters.UsersRecyclerAdapter;
 import com.androidtutorialshub.LuckyWithYou.model.User;
+import com.androidtutorialshub.LuckyWithYou.snake.GameLauncher;
+import com.androidtutorialshub.LuckyWithYou.snake.HealtySnakeGame;
 import com.androidtutorialshub.LuckyWithYou.sql.DatabaseHelper;
 
 import java.util.List;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private AppCompatButton appCompatButtonCancer;
     private AppCompatButton appCompatButtonSnake;
     private String userEmail;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initListeners();
         //initObjects();
     }
-
-
 
     private void initViews() {
        // textViewName = (AppCompatTextView) findViewById(R.id.textViewName);
@@ -134,18 +138,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.appCompatButtonSnake:
                 // Navigate to Snake
-
-               //intentRegister = new Intent(getApplicationContext(), SnakeGameActivity.class);
-
-                SnakeGameActivity snake = new SnakeGameActivity();
-
-
+                intentRegister = new Intent(getApplicationContext(), SnakeGameActivity.class);
                 break;
 
 
         }
-
-
 
         if (intentRegister != null) {
             intentRegister.putExtra("EMAIL", userEmail.toString());
