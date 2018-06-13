@@ -70,4 +70,7 @@ public class Snake {
         }
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
 }
