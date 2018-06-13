@@ -1,19 +1,13 @@
 package com.androidtutorialshub.LuckyWithYou.adapters;
 
-import android.content.Intent;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidtutorialshub.LuckyWithYou.R;
-import com.androidtutorialshub.LuckyWithYou.activities.MainActivity;
 import com.androidtutorialshub.LuckyWithYou.model.User;
-
-import java.util.List;
 
 /**
  */

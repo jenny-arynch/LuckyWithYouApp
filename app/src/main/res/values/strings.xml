@@ -33,6 +33,8 @@
     <string name="MelanomaCancer">Melanoma</string>
     <string name="BreastCancer">Breast</string>
     <string name="SkinCancer">Skin</string>
+    <string name="todo">TODO</string>
+
     <string-array name="main_cancer">
         <item>about1 MAIN</item>
         <item>about2 MAIN</item>

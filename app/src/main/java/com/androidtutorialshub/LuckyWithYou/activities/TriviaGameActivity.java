@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.widget.Button;
 import android.app.Dialog;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
     //private TextView correctAnswer;
     private ImageView imageView;
     private AppCompatButton appCompatButtonBack;
-    private ArrayList<TriviaQues> trivQues=new ArrayList<TriviaQues>();
+    private ArrayList<TriviaQues> trivQues= new ArrayList<>();
     private int currentQues=-1;
     private int countOfHints=0;
     private DatabaseHelper databaseHelper;
@@ -51,6 +50,9 @@ public class TriviaGameActivity extends AppCompatActivity implements View.OnClic
 
     private Dialog dialog;
     private AppCompatButton start;
+
+
+
     public void onCreate(Bundle savedInstanceState) {
 
 

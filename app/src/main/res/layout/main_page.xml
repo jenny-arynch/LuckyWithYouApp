@@ -14,22 +14,22 @@
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="200dp"
         android:background="@drawable/bulldog"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="200dp">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonProfile"
-            android:layout_marginTop="20dp"
+            style="@style/AppTheme.RoundedCornerMaterialButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/buttonshape"
-            android:text="@string/user_profile"
             android:drawableLeft="@drawable/myprofile"
-            style="@style/AppTheme.RoundedCornerMaterialButton"/>
+            android:text="@string/user_profile"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonTrivia"
@@ -37,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
             android:drawableLeft="@drawable/triviagame"
-            android:text="@string/trivia_game" />
+            android:text="@string/trivia_game"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonCancer"
@@ -48,10 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
             android:drawableLeft="@drawable/aboutcancer"
-            android:text="@string/what_is_cancer" />
+            android:text="@string/what_is_cancer"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonForum"
@@ -59,10 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
             android:drawableLeft="@drawable/forum"
-            android:text="@string/forum" />
+            android:text="@string/forum"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/appCompatButtonSnake"
@@ -70,10 +70,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:background="@drawable/buttonshape"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
             android:drawableLeft="@drawable/snake"
-            android:text="@string/snake_game" />
+            android:text="@string/snake_game"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp" />
 
     </android.support.v7.widget.LinearLayoutCompat>
 </android.support.v4.widget.NestedScrollView>
